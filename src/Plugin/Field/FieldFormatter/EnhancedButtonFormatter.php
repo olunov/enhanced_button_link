@@ -129,6 +129,7 @@ class EnhancedButtonFormatter extends LinkFormatter
             '#url' => $url,
             '#type' => $settings['btn_type'],
             '#size' => $settings['btn_size'],
+            '#status' => $settings['btn_status'],
             ];
         }
 
