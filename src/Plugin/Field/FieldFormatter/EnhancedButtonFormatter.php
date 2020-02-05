@@ -51,7 +51,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
         'btn-light' => $this->t('Light button'),
         'btn-dark' => $this->t('Dark button'),
       ],
-      '#required' => true,
+      '#required' => TRUE,
     ];
 
     $form['btn_size'] = [
@@ -62,7 +62,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
         'btn-lg' => $this->t('Large Button'),
         'btn-sm' => $this->t('Small Button'),
       ],
-      '#required' => true,
+      '#required' => TRUE,
     ];
 
     $form['btn_status'] = [
@@ -73,7 +73,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
         'active' => $this->t('Active Button'),
         'disabled' => $this->t('Disabled Button'),
       ],
-      '#required' => true,
+      '#required' => TRUE,
     ];
 
     $form['target'] = [
@@ -86,7 +86,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
         '_blank' => $this->t('New window'),
       ],
     ];
-    
+
     return $form + parent::settingsForm($form, $form_state);
   }
 
@@ -100,7 +100,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $summary[] = $this->t('Button type: @text', ['@text' => $settings['btn_type']]);
     $summary[] = $this->t('Button size: @text', ['@text' => $settings['btn_size']]);
     $summary[] = $this->t('Button status: @text', ['@text' => $settings['btn_status']]);
-    
+
     if (!empty($settings['target'])) {
       $summary[] = $this->t('Open link in new window');
     }
@@ -130,4 +130,5 @@ class EnhancedButtonFormatter extends LinkFormatter {
 
     return $elements;
   }
+
 }
