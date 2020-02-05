@@ -42,7 +42,7 @@ class EnhancedButtonFormatter extends LinkFormatter
         $settings = $this->getSettings();
     
         $form['btn_type'] = [
-        '#type' => 'dropbutton',
+        '#type' => 'select',
         '#title' => $this->t('Button type'),
         '#default_value' => $settings['btn_type'],
         '#options' => [
@@ -59,17 +59,18 @@ class EnhancedButtonFormatter extends LinkFormatter
         ];
 
         $form['btn_size'] = [
-        '#type' => 'dropbutton',
+        '#type' => 'select',
         '#title' => $this->t('Button Size'),
         '#default_value' => $settings['btn_size'],
         '#options' => [
         'btn-lg' => $this->t('Large Button'),
         'btn-sm' => $this->t('Small Button'),
         ],
+        '#required' => true,
         ];
     
         $form['btn_status'] = [
-        '#type' => 'dropbutton',
+        '#type' => 'select',
         '#title' => $this->t('Button status'),
         '#default_value' => $settings['btn_status'],
         '#options' => [
@@ -80,7 +81,7 @@ class EnhancedButtonFormatter extends LinkFormatter
         ];
     
         $form['target'] = [
-        '#type' => 'dropbutton',
+        '#type' => 'select',
         '#title' => $this->t('Target window'),
         '#target' => $settings['target'],
         '#default_value' => $settings['target'],
@@ -88,7 +89,6 @@ class EnhancedButtonFormatter extends LinkFormatter
         '' => $this->t('Current window'),
         '_blank' => $this->t('New window'),
         ],
-        '#required' => true,
         ];
     
         return $form + parent::settingsForm($form, $form_state);
@@ -125,6 +125,7 @@ class EnhancedButtonFormatter extends LinkFormatter
             $url = $this->buildUrl($item);
             $urlTitle = $url->toString();
             $elements[$delta] = [
+            '#theme' => 'link-formatter-enhanced-button-link',
             '#url_title' => $urlTitle,
             '#url' => $url,
             '#type' => $settings['btn_type'],
