@@ -22,97 +22,17 @@ class EnhancedButtonFormatter extends LinkFormatter {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return [
-      'btn_type' => 'btn-light',
-      'btn_size' => 'btn-sm',
-      'btn_status' => 'active',
-      'target' => '',
-    ] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $settings = $this->getSettings();
-
-    $form['btn_type'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Button type'),
-      '#default_value' => $settings['btn_type'],
-      '#options' => [
-        'btn-primary' => $this->t('Primary button'),
-        'btn-secondary' => $this->t('Secondary button'),
-        'btn-success' => $this->t('Success button'),
-        'btn-danger' => $this->t('Danger button'),
-        'btn-warning' => $this->t('Warning button'),
-        'btn-info' => $this->t('Info button'),
-        'btn-light' => $this->t('Light button'),
-        'btn-dark' => $this->t('Dark button'),
-        'btn-outline-primary' => $this->t('Primary outline button'),
-        'btn-outline-secondary' => $this->t('Secondary outline button'),
-        'btn-outline-success' => $this->t('Success outline button'),
-        'btn-outline-danger' => $this->t('Danger outline button'),
-        'btn-outline-warning' => $this->t('Warning outline button'),
-        'btn-outline-info' => $this->t('Info outline button'),
-        'btn-outline-light' => $this->t('Light outline button'),
-        'btn-outline-dark' => $this->t('Dark outline button'),
-      ],
-      '#required' => TRUE,
-    ];
-
-    $form['btn_size'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Button Size'),
-      '#default_value' => $settings['btn_size'],
-      '#options' => [
-        'btn-lg' => $this->t('Large Button'),
-        'btn-sm' => $this->t('Small Button'),
-      ],
-      '#required' => TRUE,
-    ];
-
-    $form['btn_status'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Button status'),
-      '#default_value' => $settings['btn_status'],
-      '#options' => [
-        'active' => $this->t('Active Button'),
-        'disabled' => $this->t('Disabled Button'),
-      ],
-      '#required' => TRUE,
-    ];
-
-    $form['target'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Target window'),
-      '#target' => $settings['target'],
-      '#default_value' => $settings['target'],
-      '#options' => [
-        '' => $this->t('Current window'),
-        '_blank' => $this->t('New window'),
-      ],
-    ];
-
-    return $form + parent::settingsForm($form, $form_state);
+    // @TODO: add here default configuration for output of the link.
+    return $form;
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $settings = $this->getSettings();
     $summary = [];
-
-    $summary[] = $this->t('Button type: @text', ['@text' => $settings['btn_type']]);
-    $summary[] = $this->t('Button size: @text', ['@text' => $settings['btn_size']]);
-    $summary[] = $this->t('Button status: @text', ['@text' => $settings['btn_status']]);
-
-    if (!empty($settings['target'])) {
-      $summary[] = $this->t('Open link in new window');
-    }
-
+    // @TODO: add here summary for default output.
     return $summary;
   }
 
@@ -120,23 +40,66 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = [];
-    $settings = $this->getSettings();
+    $element = [];
+    $entity = $items->getEntity();
 
     foreach ($items as $delta => $item) {
       $url = $this->buildUrl($item);
-      $urlTitle = $url->toString();
-      $elements[$delta] = [
-        '#theme' => 'link-formatter-enhanced-button-link',
-        '#url_title' => $urlTitle,
+
+      // Load Link Title.
+      $link_title = \Drupal::token()->replace($item->title, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
+
+      // Create default output of the link.
+      $element[$delta] = [
+        '#type' => 'link',
         '#url' => $url,
-        '#type' => $settings['btn_type'],
-        '#size' => $settings['btn_size'],
-        '#status' => $settings['btn_status'],
+        '#title' => $link_title,
+        '#options' => [],
       ];
+
+      // Load links options.
+      $options = $url->getOptions();
+
+      $attributes = [];
+      $btn_class = [];
+
+      // Add button style (CSS class).
+      if (!empty($options['style'])) {
+        $btn_class += ['btn', $options['style']];
+      }
+
+      // Add button style (CSS class).
+      if (!empty($options['size'])) {
+        $btn_class[] = $options['size'];
+      }
+
+      // Disable button if set to be disabled.
+      // @TODO: Change checking status by defined flag, not text.
+      if ($options['status'] !== 'enabled') {
+        $attributes['aria-disabled'] = 'true';
+        $attributes['role'] = 'button';
+        $btn_class[] = 'disabled';
+      }
+
+      // Disable button if set to be disabled.
+      // @TODO: Change checking target by defined flag, not text.
+      if ($options['target'] && $options['target'] == 'new tab') {
+        $attributes['target'] = '_blank';
+      }
+
+      // Add collected classes to attributes.
+      if (!empty($btn_class)) {
+        $attributes['class'] = implode(' ', $btn_class);
+      }
+
+      // Add collected attributes to the element.
+      if (!empty($attributes)) {
+        $element[$delta]['#options'] += ['attributes' => []];
+        $element[$delta]['#options']['attributes'] += $attributes;
+      }
     }
 
-    return $elements;
+    return $element;
   }
 
 }
