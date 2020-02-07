@@ -1,5 +1,5 @@
 README.txt for Enhanced Button Link module
----------------------------
+------------------------------------------
 
 CONTENTS OF THIS FILE
 ---------------------
