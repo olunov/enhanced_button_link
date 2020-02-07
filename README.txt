@@ -16,13 +16,12 @@ INTRODUCTION
 
 Enhanced Button Link module contains:
 
- - Enhanced Button Link Widget (EnhancedButtonLinkWidget) for adding Bootstrap
-   options to link.
+ - Enhanced Button Link Widget for adding Bootstrap options to link.
 
- - Enhanced Button Link Formatter (EnhancedButtonFormatter) for rendering a link
-   as a Bootstrap button.
+ - Enhanced Button Link Formatter for rendering a link as a Bootstrap button.
 
-This module is in active development for now, don't use it on a production site.
+This module is in active development for now, it is not recommended to use it on
+a production site.
 
  - For a full description of the module visit:
    https://www.drupal.org/project/enhanced_button_link
@@ -40,11 +39,13 @@ The module requires Link (Drupal core) module.
 INCLUDED MODULES AND FEATURES
 -----------------------------
 
-Enhanced Button Link Widget - Adds a widget with extra fields for adding
-settings to a link field for managing button style, size, target and status.
+Enhanced Button Link Widget (EnhancedButtonLinkWidget) - Adds a widget with
+extra fields for adding settings to a link field for managing button style,
+size, target and status.
 
-Enhanced Button Link Formatter - Adds a formatter for rendering a link as
-Bootstrap button based on specified parameters in the widget.
+Enhanced Button Link Formatter (EnhancedButtonFormatter) - Adds a formatter for
+rendering a link as Bootstrap button based on specified parameters in the
+widget.
 
 
 INSTALLATION
@@ -57,7 +58,15 @@ INSTALLATION
 
 CONFIGURATION
 -------------
-
+1. Navigate to Administration > Structure > Content types [Content type to
+   edit] > Manage form display.
+2. Select the 'Enhanced Button Link' as widget for the Link field. Save
+   changes.
+3. Navigate to Administration > Structure > Content types [Content type to
+   edit] > Manage display.
+4. Select the 'Enhanced Button Link' as formatter for the Link field. Save
+   changes.
+5. Now it is possible to manage link options to render it as a Bootstrap button.
 
 Author/Maintainers
 ------------------
