@@ -31,6 +31,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#default_value' => isset($items[$delta]->options['style']) ? $items[$delta]->options['style'] : '',
       '#description' => $this->t('Select the style of the button.'),
       '#options' => [
+        'default' => $this->t('default'),
         'btn-primary' => $this->t('btn-primary'),
         'btn-secondary' => $this->t('btn-secondary'),
         'btn-success' => $this->t('btn-success'),
@@ -57,6 +58,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#default_value' => isset($items[$delta]->options['size']) ? $items[$delta]->options['size'] : '',
       '#description' => $this->t('Select the size of the button.'),
       '#options' => [
+        'default' => $this->t('default'),
         '' => $this->t('normal'),
         'btn-sm' => $this->t('small'),
         'btn-lg' => $this->t('big'),
@@ -69,6 +71,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : '',
       '#description' => $this->t('Select the status of the button.'),
       '#options' => [
+        'default' => $this->t('default'),
         'enabled' => $this->t('enabled'),
         'disabled' => $this->t('disabled'),
       ],
@@ -80,6 +83,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : '',
       '#description' => $this->t('Select the link target.'),
       '#options' => [
+        'default' => $this->t('default'),
         'same window' => $this->t('same window'),
         'new tab' => $this->t('new tab'),
       ],
