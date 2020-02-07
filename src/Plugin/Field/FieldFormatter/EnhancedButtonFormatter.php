@@ -9,6 +9,7 @@ use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\enhanced_button_link\EnhancedButtonInterface;
 
 /**
  * Plugin implementation of the 'enhanced_button_formatter' formatter.
@@ -123,22 +124,28 @@ class EnhancedButtonFormatter extends LinkFormatter {
         $btn_class += ['btn', $options['style']];
       }
 
-      // Add button style (CSS class).
-      if (!empty($options['size'])) {
-        $btn_class[] = $options['size'];
+      $size_css_class = '';
+      switch ($options['size']) {
+        case EnhancedButtonInterface::SIZE_BIG:
+          $size_css_class = 'btn-lg';
+          break;
+
+        case EnhancedButtonInterface::SIZE_SMALL:
+          $size_css_class = 'btn-sm';
+          break;
       }
 
+      $btn_class[] = $size_css_class;
+
       // Disable button if set to be disabled.
-      // @TODO: Change checking status by defined flag, not text.
-      if ($options['status'] !== 'enabled') {
+      if ($options['status'] == EnhancedButtonInterface::STATUS_DISABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
         $btn_class[] = 'disabled';
       }
 
       // Disable button if set to be disabled.
-      // @TODO: Change checking target by defined flag, not text.
-      if ($options['target'] && $options['target'] == 'new tab') {
+      if ($options['target'] && $options['target'] == EnhancedButtonInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
 
