@@ -60,7 +60,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#options' => [
         EnhancedButtonInterface::SIZE_NORMAL => $this->t('Normal'),
         EnhancedButtonInterface::SIZE_BIG => $this->t('Big'),
-        EnhancedButtonInterface::SIZE_SMALL => $this->t('SMALL'),
+        EnhancedButtonInterface::SIZE_SMALL => $this->t('Small'),
       ],
     ];
 
