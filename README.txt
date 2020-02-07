@@ -20,10 +20,9 @@ Enhanced Button Link module contains:
    options to link.
 
  - Enhanced Button Link Formatter (EnhancedButtonFormatter) for rendering a link
-   as Bootstrap button.
+   as a Bootstrap button.
 
-This module is in active development for now, please don't use it on a
-production site.
+This module is in active development for now, don't use it on a production site.
 
  - For a full description of the module visit:
    https://www.drupal.org/project/enhanced_button_link
@@ -35,48 +34,32 @@ production site.
 REQUIREMENTS
 ------------
 
-This module requires Link (Drupal core) module only.
+The module requires Link (Drupal core) module.
 
 
 INCLUDED MODULES AND FEATURES
 -----------------------------
 
-Webprofiler - Adds a debug bar at bottom of all pages with tons of useful
-information like a query list, cache hit/miss data, memory profiling, page
-speed, php info, session info, etc.
+Enhanced Button Link Widget - Adds a widget with extra fields for adding
+settings to a link field for managing button style, size, target and status.
 
-Devel Generate - Bulk creates nodes, users, comment, terms for development. Has
-Drush integration.
-
-Drush Unit Testing - See develDrushTest.php for an example of unit testing of
-the Drush integration. This uses Drush's own test framework, based on PHPUnit.
-To run the tests, use run-tests-drush.sh. You may pass in any arguments that
-are valid for `phpunit`.
-
-
-RECOMMENDED MODULE
-------------------
-
-Devel Generate Extensions - Devel Images Provider allows to configure external
-providers for images.
-
- - http://drupal.org/project/devel_image_provider
+Enhanced Button Link Formatter - Adds a formatter for rendering a link as
+Bootstrap button based on specified parameters in the widget.
 
 
 INSTALLATION
 ------------
 
- - Install the Devel module as you would normally install a contributed Drupal
-   module. Visit https://www.drupal.org/node/1897420 for further information.
+ - Install the Enhanced Button Link module as you would normally install a
+   contributed Drupal module. Visit https://www.drupal.org/node/1897420 for
+   further information.
+
+
+CONFIGURATION
+-------------
 
 
 Author/Maintainers
 ------------------
 
- - Moshe Weitzman (moshe weitzman) - https://www.drupal.org/u/moshe-weitzman
- - Hans Salvisberg (salvis) - https://www.drupal.org/u/salvis
- - Pedro Cambra https://drupal.org/user/122101/contact http://www.ymbra.com/
- - Juan Pablo Novillo https://www.drupal.org/u/juampynr
- - lussoluca https://www.drupal.org/u/lussoluca
- - willzyx https://www.drupal.org/u/willzyx
-
+ - Oleksandr Lunov (alunyov) - https://www.drupal.org/u/alunyov
