@@ -9,6 +9,7 @@ use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\enhanced_button_link\Plugin\EnhancedButtonInterface;
 
 /**
  * Plugin implementation of the 'enhanced_button_formatter' formatter.
@@ -129,16 +130,14 @@ class EnhancedButtonFormatter extends LinkFormatter {
       }
 
       // Disable button if set to be disabled.
-      // @TODO: Change checking status by defined flag, not text.
-      if ($options['status'] !== 'enabled') {
+      if ($options['status'] !== EnhancedButtonInterface::STATUS_ENABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
-        $btn_class[] = 'disabled';
+        $btn_class[] = EnhancedButtonInterface::STATUS_DISABLED;
       }
 
       // Disable button if set to be disabled.
-      // @TODO: Change checking target by defined flag, not text.
-      if ($options['target'] && $options['target'] == 'new tab') {
+      if ($options['target'] && $options['target'] == EnhancedButtonInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
 
