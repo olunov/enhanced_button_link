@@ -124,16 +124,24 @@ class EnhancedButtonFormatter extends LinkFormatter {
         $btn_class += ['btn', $options['style']];
       }
 
-      // Add button style (CSS class).
-      if (!empty($options['size'])) {
-        $btn_class[] = $options['size'];
+      $size_css_class = '';
+      switch ($options['size']) {
+        case EnhancedButtonInterface::SIZE_BIG:
+          $size_css_class = 'btn-lg';
+          break;
+
+        case EnhancedButtonInterface::SIZE_SMALL:
+          $size_css_class = 'btn-sm';
+          break;
       }
 
+      $btn_class[] = $size_css_class;
+
       // Disable button if set to be disabled.
-      if ($options['status'] !== EnhancedButtonInterface::STATUS_ENABLED) {
+      if ($options['status'] == EnhancedButtonInterface::STATUS_DISABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
-        $btn_class[] = EnhancedButtonInterface::STATUS_DISABLED;
+        $btn_class[] = 'disabled';
       }
 
       // Disable button if set to be disabled.
