@@ -9,7 +9,7 @@ CONTENTS OF THIS FILE
  * Included Modules and Features
  * Installation
  * Configuration
- * Maintainers
+ * Author/Maintainers
 
 INTRODUCTION
 ------------
