@@ -11,7 +11,7 @@ use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
  *
  * @FieldFormatter(
  *   id = "enhanced_button_formatter",
- *   label = @Translation("Enhanced button formatter"),
+ *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"
  *   }

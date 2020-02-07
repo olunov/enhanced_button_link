@@ -11,7 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @FieldWidget(
  *   id = "link_enhanced_button",
- *   label = @Translation("Enhanced Link"),
+ *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"
  *   }
