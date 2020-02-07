@@ -9,7 +9,7 @@ use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\enhanced_button_link\Plugin\EnhancedButtonInterface;
+use Drupal\enhanced_button_link\EnhancedButtonInterface;
 
 /**
  * Plugin implementation of the 'enhanced_button_formatter' formatter.

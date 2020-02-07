@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\enhanced_button_link\Plugin;
+namespace Drupal\enhanced_button_link;
 
 /**
  * Defines an interface for the Enhanced Button Formatter.
