@@ -28,7 +28,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
 
     $element['options'] = [
       '#type' => 'details',
-      '#title' => $this->t('Link Button Options'),
+      '#title' => $this->t('Button Link Options'),
     ];
 
     $element['options']['type'] = [
