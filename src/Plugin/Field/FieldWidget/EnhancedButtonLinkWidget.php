@@ -2,6 +2,7 @@
 
 namespace Drupal\enhanced_button_link\Plugin\Field\FieldWidget;
 
+use Drupal\enhanced_button_link\EnhancedButtonInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -28,9 +29,10 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['style'] = [
       '#type' => 'select',
       '#title' => $this->t('Style'),
-      '#default_value' => isset($items[$delta]->options['style']) ? $items[$delta]->options['style'] : '',
+      '#default_value' => isset($items[$delta]->options['style']) ? $items[$delta]->options['style'] : EnhancedButtonInterface::STYLE_DEFAULT,
       '#description' => $this->t('Select the style of the button.'),
       '#options' => [
+        EnhancedButtonInterface::STYLE_DEFAULT => $this->t('Default'),
         'btn-primary' => $this->t('btn-primary'),
         'btn-secondary' => $this->t('btn-secondary'),
         'btn-success' => $this->t('btn-success'),
@@ -54,34 +56,35 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['size'] = [
       '#type' => 'select',
       '#title' => $this->t('Size'),
-      '#default_value' => isset($items[$delta]->options['size']) ? $items[$delta]->options['size'] : '',
+      '#default_value' => isset($items[$delta]->options['size']) ? $items[$delta]->options['size'] : EnhancedButtonInterface::SIZE_DEFAULT,
       '#description' => $this->t('Select the size of the button.'),
       '#options' => [
-        '' => $this->t('normal'),
-        'btn-sm' => $this->t('small'),
-        'btn-lg' => $this->t('big'),
+        EnhancedButtonInterface::SIZE_DEFAULT => $this->t('Default'),
+        EnhancedButtonInterface::SIZE_NORMAL => $this->t('Normal'),
+        EnhancedButtonInterface::SIZE_BIG => $this->t('Big'),
+        EnhancedButtonInterface::SIZE_SMALL => $this->t('Small'),
       ],
     ];
 
     $element['options']['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : '',
+      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : EnhancedButtonInterface::STATUS_ENABLED,
       '#description' => $this->t('Select the status of the button.'),
       '#options' => [
-        'enabled' => $this->t('enabled'),
-        'disabled' => $this->t('disabled'),
+        EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
+        EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
       ],
     ];
 
     $element['options']['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
-      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : '',
+      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : EnhancedButtonInterface::TARGET_SAME_WINDOW,
       '#description' => $this->t('Select the link target.'),
       '#options' => [
-        'same window' => $this->t('same window'),
-        'new tab' => $this->t('new tab'),
+        EnhancedButtonInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
+        EnhancedButtonInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],
     ];
 

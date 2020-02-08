@@ -9,6 +9,7 @@ use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\enhanced_button_link\EnhancedButtonInterface;
 
 /**
  * Plugin implementation of the 'enhanced_button_formatter' formatter.
@@ -77,18 +78,6 @@ class EnhancedButtonFormatter extends LinkFormatter {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    return [
-      'option_style' => 'btn-primary',
-      'option_size' => 'normal',
-      'option_status' => 'enabled',
-      'option_target' => 'new tab',
-    ] + parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     // @TODO: add here default configuration for output of the link.
     return $form;
@@ -134,29 +123,29 @@ class EnhancedButtonFormatter extends LinkFormatter {
       if (!empty($options['style'])) {
         $btn_class += ['btn', $options['style']];
       }
-      else {
-        $btn_class += ['btn', $this->getSetting('option_style')];
+
+      $size_css_class = '';
+      switch ($options['size']) {
+        case EnhancedButtonInterface::SIZE_BIG:
+          $size_css_class = 'btn-lg';
+          break;
+
+        case EnhancedButtonInterface::SIZE_SMALL:
+          $size_css_class = 'btn-sm';
+          break;
       }
 
-      // Add button style (CSS class).
-      if (!empty($options['size']) && $options['size'] !== 'normal') {
-        $btn_class[] = $options['size'];
-      }
-      elseif ($size = $this->getSetting('option_size') !== 'normal') {
-        $btn_class[] = $size;
-      }
+      $btn_class[] = $size_css_class;
 
       // Disable button if set to be disabled.
-      // @TODO: Change checking status by defined flag, not text.
-      if ($options['status'] === 'disabled' || (empty($options['status']) && $this->getSetting('option_status') === 'disabled')) {
+      if ($options['status'] == EnhancedButtonInterface::STATUS_DISABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
         $btn_class[] = 'disabled';
       }
 
       // Disable button if set to be disabled.
-      // @TODO: Change checking target by defined flag, not text.
-      if ($options['target'] === 'new tab' || (empty($options['target']) && $this->getSetting('option_target') === 'new tab')) {
+      if ($options['target'] && $options['target'] == EnhancedButtonInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
 
