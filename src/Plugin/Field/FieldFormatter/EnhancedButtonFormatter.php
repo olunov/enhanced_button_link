@@ -159,8 +159,14 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * {@inheritdoc}
    */
   public function settingsSummary() {
+    $settings = $this->getSettings();
     $summary = [];
-    // @TODO: add here summary for default output.
+
+    $summary[] = $this->t('Button Style: @text', ['@text' => $settings['style']]);
+    $summary[] = $this->t('Button Size: @text', ['@text' => $settings['size']]);
+    $summary[] = $this->t('Button Status: @text', ['@text' => $settings['status']]);
+    $summary[] = $this->t('Button Target: @text', ['@text' => $settings['target']]);
+
     return $summary;
   }
 
@@ -169,10 +175,14 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
+    $settings = $this->getSettings();
     $entity = $items->getEntity();
 
     foreach ($items as $delta => $item) {
       $url = $this->buildUrl($item);
+
+      // Load links options.
+      $options = $url->getOptions();
 
       // Load Link Title.
       $link_title = $this->token->replace($item->title, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
@@ -185,19 +195,21 @@ class EnhancedButtonFormatter extends LinkFormatter {
         '#options' => [],
       ];
 
-      // Load links options.
-      $options = $url->getOptions();
-
       $attributes = [];
       $btn_class = [];
 
-      // Add button style (CSS class).
-      if (!empty($options['style'])) {
-        $btn_class += ['btn', $options['style']];
+      // Add button style.
+      $button_link_style = (empty($options['style']) || $options['style'] == EnhancedButtonInterface::STYLE_DEFAULT) ? $settings['style'] : $options['style'];
+
+      if (!empty($button_link_style)) {
+        $btn_class += ['btn', $button_link_style];
       }
 
+      // Add button size.
+      $button_link_size = (empty($options['size']) || $options['size'] == EnhancedButtonInterface::SIZE_DEFAULT) ? $settings['size'] : $options['size'];
+
       $size_css_class = '';
-      switch ($options['size']) {
+      switch ($button_link_size) {
         case EnhancedButtonInterface::SIZE_BIG:
           $size_css_class = 'btn-lg';
           break;
