@@ -78,9 +78,81 @@ class EnhancedButtonFormatter extends LinkFormatter {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return [
+        'option_style' => 'btn-primary',
+        'option_size' => EnhancedButtonInterface::SIZE_NORMAL,
+        'option_status' => EnhancedButtonInterface::STATUS_ENABLED,
+        'option_target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
+      ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    // @TODO: add here default configuration for output of the link.
-    return $form;
+    $settings = $this->getSettings();
+
+    $form['style'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Style'),
+      '#default_value' => !empty($settings['style']) ? $settings['style'] : 'btn-primary',
+      '#options' => [
+        'btn-primary' => $this->t('Primary button'),
+        'btn-secondary' => $this->t('Secondary button'),
+        'btn-success' => $this->t('Success button'),
+        'btn-danger' => $this->t('Danger button'),
+        'btn-warning' => $this->t('Warning button'),
+        'btn-info' => $this->t('Info button'),
+        'btn-light' => $this->t('Light button'),
+        'btn-dark' => $this->t('Dark button'),
+        'btn-outline-primary' => $this->t('Primary outline button'),
+        'btn-outline-secondary' => $this->t('Secondary outline button'),
+        'btn-outline-success' => $this->t('Success outline button'),
+        'btn-outline-danger' => $this->t('Danger outline button'),
+        'btn-outline-warning' => $this->t('Warning outline button'),
+        'btn-outline-info' => $this->t('Info outline button'),
+        'btn-outline-light' => $this->t('Light outline button'),
+        'btn-outline-dark' => $this->t('Dark outline button'),
+      ],
+      '#required' => TRUE,
+    ];
+
+    $form['size'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Size'),
+      '#default_value' => !empty($settings['size']) ? $settings['size'] : EnhancedButtonInterface::SIZE_NORMAL,
+      '#options' => [
+        EnhancedButtonInterface::SIZE_NORMAL => $this->t('Normal'),
+        EnhancedButtonInterface::SIZE_BIG => $this->t('Big'),
+        EnhancedButtonInterface::SIZE_SMALL => $this->t('Small'),
+      ],
+      '#required' => TRUE,
+    ];
+
+    $form['status'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Status'),
+      '#default_value' => !empty($settings['status']) ? $settings['status']: EnhancedButtonInterface::STATUS_ENABLED,
+      '#options' => [
+        EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
+        EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
+      ],
+      '#required' => TRUE,
+    ];
+
+    $form['target'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Target'),
+      '#default_value' => !empty($settings['target']) ? $settings['target'] : EnhancedButtonInterface::TARGET_SAME_WINDOW,
+      '#options' => [
+        EnhancedButtonInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
+        EnhancedButtonInterface::TARGET_NEW_TAB => $this->t('New Tab'),
+      ],
+      '#required' => TRUE,
+    ];
+
+    return $form + parent::settingsForm($form, $form_state);
   }
 
   /**
