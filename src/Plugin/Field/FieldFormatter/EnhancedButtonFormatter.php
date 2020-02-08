@@ -80,7 +80,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public static function defaultSettings() {
     return [
-      'style' => 'btn-primary',
+      'type' => 'btn-primary',
       'size' => EnhancedButtonInterface::SIZE_NORMAL,
       'status' => EnhancedButtonInterface::STATUS_ENABLED,
       'target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
@@ -93,10 +93,10 @@ class EnhancedButtonFormatter extends LinkFormatter {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    $form['style'] = [
+    $form['type'] = [
       '#type' => 'select',
-      '#title' => $this->t('Style'),
-      '#default_value' => !empty($settings['style']) ? $settings['style'] : 'btn-primary',
+      '#title' => $this->t('Type'),
+      '#default_value' => !empty($settings['type']) ? $settings['type'] : 'btn-primary',
       '#options' => [
         'btn-primary' => $this->t('Primary button'),
         'btn-secondary' => $this->t('Secondary button'),
@@ -162,7 +162,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $settings = $this->getSettings();
     $summary = [];
 
-    $summary[] = $this->t('Button Style: @text', ['@text' => $settings['style']]);
+    $summary[] = $this->t('Button Type: @text', ['@text' => $settings['type']]);
     $summary[] = $this->t('Button Size: @text', ['@text' => $settings['size']]);
     $summary[] = $this->t('Button Status: @text', ['@text' => $settings['status']]);
     $summary[] = $this->t('Button Target: @text', ['@text' => $settings['target']]);
@@ -198,11 +198,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $attributes = [];
       $btn_class = [];
 
-      // Add button style.
-      $button_link_style = (empty($options['style']) || $options['style'] == EnhancedButtonInterface::STYLE_DEFAULT) ? $settings['style'] : $options['style'];
+      // Add button type.
+      $button_link_type = (empty($options['type']) || $options['type'] == EnhancedButtonInterface::TYPE_DEFAULT) ? $settings['type'] : $options['type'];
 
-      if (!empty($button_link_style)) {
-        $btn_class += ['btn', $button_link_style];
+      if (!empty($button_link_type)) {
+        $btn_class += ['btn', $button_link_type];
       }
 
       // Add button size.

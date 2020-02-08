@@ -10,7 +10,7 @@ interface EnhancedButtonInterface {
   /**
    * Specifies whether the button's style is to be used as default.
    */
-  const STYLE_DEFAULT = 'default';
+  const TYPE_DEFAULT = 'default';
 
   /**
    * Specifies whether the button's size is to be used as default.

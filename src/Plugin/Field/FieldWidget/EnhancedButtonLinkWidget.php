@@ -26,13 +26,18 @@ class EnhancedButtonLinkWidget extends LinkWidget {
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
 
-    $element['options']['style'] = [
+    $element['options'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Link Button Styles'),
+    ];
+
+    $element['options']['type'] = [
       '#type' => 'select',
-      '#title' => $this->t('Style'),
-      '#default_value' => isset($items[$delta]->options['style']) ? $items[$delta]->options['style'] : EnhancedButtonInterface::STYLE_DEFAULT,
-      '#description' => $this->t('Select the style of the button.'),
+      '#title' => $this->t('Type'),
+      '#default_value' => isset($items[$delta]->options['type']) ? $items[$delta]->options['type'] : EnhancedButtonInterface::TYPE_DEFAULT,
+      '#description' => $this->t('Select the type of the button.'),
       '#options' => [
-        EnhancedButtonInterface::STYLE_DEFAULT => $this->t('Default'),
+        EnhancedButtonInterface::TYPE_DEFAULT => $this->t('Default'),
         'btn-primary' => $this->t('btn-primary'),
         'btn-secondary' => $this->t('btn-secondary'),
         'btn-success' => $this->t('btn-success'),
