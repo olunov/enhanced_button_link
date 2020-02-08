@@ -69,9 +69,10 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : EnhancedButtonInterface::STATUS_ENABLED,
+      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : EnhancedButtonInterface::STATUS_DEFAULT,
       '#description' => $this->t('Select the status of the button.'),
       '#options' => [
+        EnhancedButtonInterface::STATUS_DEFAULT => $this->t('Default'),
         EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
         EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
       ],
@@ -80,9 +81,10 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
-      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : EnhancedButtonInterface::TARGET_SAME_WINDOW,
+      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : EnhancedButtonInterface::TARGET_DEFAULT,
       '#description' => $this->t('Select the link target.'),
       '#options' => [
+        EnhancedButtonInterface::TARGET_DEFAULT => $this->t('Default'),
         EnhancedButtonInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
         EnhancedButtonInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],

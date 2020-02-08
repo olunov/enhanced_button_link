@@ -221,15 +221,21 @@ class EnhancedButtonFormatter extends LinkFormatter {
 
       $btn_class[] = $size_css_class;
 
+      // Add button status.
+      $button_link_status = (empty($options['status']) || $options['status'] == EnhancedButtonInterface::STATUS_DEFAULT) ? $settings['status'] : $options['status'];
+
       // Disable button if set to be disabled.
-      if ($options['status'] == EnhancedButtonInterface::STATUS_DISABLED) {
+      if ($button_link_status == EnhancedButtonInterface::STATUS_DISABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
         $btn_class[] = 'disabled';
       }
 
-      // Disable button if set to be disabled.
-      if ($options['target'] && $options['target'] == EnhancedButtonInterface::TARGET_NEW_TAB) {
+      // Add button target.
+      $button_link_target = (empty($options['target']) || $options['target'] == EnhancedButtonInterface::TARGET_DEFAULT) ? $settings['target'] : $options['target'];
+
+      // Add target to the link.
+      if ($button_link_target == EnhancedButtonInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
 

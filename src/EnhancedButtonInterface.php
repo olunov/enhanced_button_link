@@ -33,6 +33,11 @@ interface EnhancedButtonInterface {
   const SIZE_SMALL = 'small';
 
   /**
+   * Specifies whether the button's status is to be used as default.
+   */
+  const STATUS_DEFAULT = 'default';
+
+  /**
    * Specifies whether the button's status is enabled.
    */
   const STATUS_ENABLED = 'enabled';
@@ -41,6 +46,11 @@ interface EnhancedButtonInterface {
    * Specifies whether the button's status is disabled.
    */
   const STATUS_DISABLED = 'disabled';
+
+  /**
+   * Specifies whether the button's target is to be used as default.
+   */
+  const TARGET_DEFAULT = 'default';
 
   /**
    * Specifies whether the link should open in same window.
