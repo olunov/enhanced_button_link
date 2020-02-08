@@ -80,11 +80,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public static function defaultSettings() {
     return [
-        'style' => 'btn-primary',
-        'size' => EnhancedButtonInterface::SIZE_NORMAL,
-        'status' => EnhancedButtonInterface::STATUS_ENABLED,
-        'target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
-      ] + parent::defaultSettings();
+      'style' => 'btn-primary',
+      'size' => EnhancedButtonInterface::SIZE_NORMAL,
+      'status' => EnhancedButtonInterface::STATUS_ENABLED,
+      'target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -133,7 +133,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $form['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => !empty($settings['status']) ? $settings['status']: EnhancedButtonInterface::STATUS_ENABLED,
+      '#default_value' => !empty($settings['status']) ? $settings['status'] : EnhancedButtonInterface::STATUS_ENABLED,
       '#options' => [
         EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
         EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
