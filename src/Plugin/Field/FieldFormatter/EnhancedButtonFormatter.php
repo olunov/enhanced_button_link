@@ -80,10 +80,10 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public static function defaultSettings() {
     return [
-        'option_style' => 'btn-primary',
-        'option_size' => EnhancedButtonInterface::SIZE_NORMAL,
-        'option_status' => EnhancedButtonInterface::STATUS_ENABLED,
-        'option_target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
+        'style' => 'btn-primary',
+        'size' => EnhancedButtonInterface::SIZE_NORMAL,
+        'status' => EnhancedButtonInterface::STATUS_ENABLED,
+        'target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
       ] + parent::defaultSettings();
   }
 
@@ -152,7 +152,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       '#required' => TRUE,
     ];
 
-    return $form + parent::settingsForm($form, $form_state);
+    return $form;
   }
 
   /**
