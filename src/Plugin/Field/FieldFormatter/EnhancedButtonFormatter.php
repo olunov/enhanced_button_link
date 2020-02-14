@@ -59,7 +59,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
    *   The path validator service.
    * @param \Drupal\Core\Utility\Token $token
-   *   The system.theme configuration factory object..
+   *   The token replacement instance.
    * @param \Drupal\Core\Config\Config $enhanced_button_link_configs
    *   The enhanced_button_link.settings configuration factory object.
    */
