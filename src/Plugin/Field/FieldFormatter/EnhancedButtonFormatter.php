@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
+use Drupal\Core\Config\Config;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
@@ -32,6 +33,13 @@ class EnhancedButtonFormatter extends LinkFormatter {
   protected $token;
 
   /**
+   * Contains the enhanced_button_link.settings configuration object.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
+  protected $enhancedButtonLinkConfigs;
+
+  /**
    * Constructs a new LinkFormatter.
    *
    * @param string $plugin_id
@@ -51,11 +59,14 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * @param \Drupal\Core\Path\PathValidatorInterface $path_validator
    *   The path validator service.
    * @param \Drupal\Core\Utility\Token $token
-   *   The token replacement instance.
+   *   The system.theme configuration factory object..
+   * @param \Drupal\Core\Config\Config $enhanced_button_link_configs
+   *   The enhanced_button_link.settings configuration factory object.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, PathValidatorInterface $path_validator, Token $token) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, PathValidatorInterface $path_validator, Token $token, Config $enhanced_button_link_configs) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, $path_validator);
     $this->token = $token;
+    $this->enhancedButtonLinkConfigs = $enhanced_button_link_configs;
   }
 
   /**
@@ -71,7 +82,8 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $configuration['view_mode'],
       $configuration['third_party_settings'],
       $container->get('path.validator'),
-      $container->get('token')
+      $container->get('token'),
+      $container->get('config.factory')->get('enhanced_button_link.settings')
     );
   }
 
@@ -92,29 +104,13 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
+    $button_link_styles = $this->enhancedButtonLinkConfigs->get('button_link_styles');
 
     $form['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
       '#default_value' => !empty($settings['type']) ? $settings['type'] : 'btn-primary',
-      '#options' => [
-        'btn-primary' => $this->t('Primary button'),
-        'btn-secondary' => $this->t('Secondary button'),
-        'btn-success' => $this->t('Success button'),
-        'btn-danger' => $this->t('Danger button'),
-        'btn-warning' => $this->t('Warning button'),
-        'btn-info' => $this->t('Info button'),
-        'btn-light' => $this->t('Light button'),
-        'btn-dark' => $this->t('Dark button'),
-        'btn-outline-primary' => $this->t('Primary outline button'),
-        'btn-outline-secondary' => $this->t('Secondary outline button'),
-        'btn-outline-success' => $this->t('Success outline button'),
-        'btn-outline-danger' => $this->t('Danger outline button'),
-        'btn-outline-warning' => $this->t('Warning outline button'),
-        'btn-outline-info' => $this->t('Info outline button'),
-        'btn-outline-light' => $this->t('Light outline button'),
-        'btn-outline-dark' => $this->t('Dark outline button'),
-      ],
+      '#options' => $button_link_styles,
       '#required' => TRUE,
     ];
 
