@@ -103,10 +103,17 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
+    $elements = parent::settingsForm($form, $form_state);
     $settings = $this->getSettings();
     $button_link_styles = $this->enhancedButtonLinkConfigs->get('button_link_styles');
 
-    $form['type'] = [
+    // Disable Link Formatter settings.
+    $elements['trim_length']['#access'] = FALSE;
+    $elements['url_only']['#access'] = FALSE;
+    $elements['url_plain']['#access'] = FALSE;
+    $elements['rel']['#access'] = FALSE;
+
+    $elements['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
       '#default_value' => !empty($settings['type']) ? $settings['type'] : 'btn-primary',
@@ -114,7 +121,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       '#required' => TRUE,
     ];
 
-    $form['size'] = [
+    $elements['size'] = [
       '#type' => 'select',
       '#title' => $this->t('Size'),
       '#default_value' => !empty($settings['size']) ? $settings['size'] : EnhancedButtonLinkInterface::SIZE_NORMAL,
@@ -126,7 +133,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       '#required' => TRUE,
     ];
 
-    $form['status'] = [
+    $elements['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
       '#default_value' => !empty($settings['status']) ? $settings['status'] : EnhancedButtonLinkInterface::STATUS_ENABLED,
@@ -137,7 +144,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       '#required' => TRUE,
     ];
 
-    $form['target'] = [
+    $elements['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
       '#default_value' => !empty($settings['target']) ? $settings['target'] : EnhancedButtonLinkInterface::TARGET_SAME_WINDOW,
@@ -146,9 +153,10 @@ class EnhancedButtonFormatter extends LinkFormatter {
         EnhancedButtonLinkInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],
       '#required' => TRUE,
+      '#weight' => 1,
     ];
 
-    return $form;
+    return $elements;
   }
 
   /**
