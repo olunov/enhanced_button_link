@@ -2,7 +2,7 @@
 
 namespace Drupal\enhanced_button_link\Plugin\Field\FieldWidget;
 
-use Drupal\enhanced_button_link\EnhancedButtonInterface;
+use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -34,10 +34,10 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
-      '#default_value' => isset($items[$delta]->options['type']) ? $items[$delta]->options['type'] : EnhancedButtonInterface::TYPE_DEFAULT,
+      '#default_value' => isset($items[$delta]->options['type']) ? $items[$delta]->options['type'] : EnhancedButtonLinkInterface::TYPE_DEFAULT,
       '#description' => $this->t('Select the type of the button.'),
       '#options' => [
-        EnhancedButtonInterface::TYPE_DEFAULT => $this->t('Default'),
+        EnhancedButtonLinkInterface::TYPE_DEFAULT => $this->t('Default'),
         'btn-primary' => $this->t('btn-primary'),
         'btn-secondary' => $this->t('btn-secondary'),
         'btn-success' => $this->t('btn-success'),
@@ -61,37 +61,37 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options']['size'] = [
       '#type' => 'select',
       '#title' => $this->t('Size'),
-      '#default_value' => isset($items[$delta]->options['size']) ? $items[$delta]->options['size'] : EnhancedButtonInterface::SIZE_DEFAULT,
+      '#default_value' => isset($items[$delta]->options['size']) ? $items[$delta]->options['size'] : EnhancedButtonLinkInterface::SIZE_DEFAULT,
       '#description' => $this->t('Select the size of the button.'),
       '#options' => [
-        EnhancedButtonInterface::SIZE_DEFAULT => $this->t('Default'),
-        EnhancedButtonInterface::SIZE_NORMAL => $this->t('Normal'),
-        EnhancedButtonInterface::SIZE_BIG => $this->t('Big'),
-        EnhancedButtonInterface::SIZE_SMALL => $this->t('Small'),
+        EnhancedButtonLinkInterface::SIZE_DEFAULT => $this->t('Default'),
+        EnhancedButtonLinkInterface::SIZE_NORMAL => $this->t('Normal'),
+        EnhancedButtonLinkInterface::SIZE_BIG => $this->t('Big'),
+        EnhancedButtonLinkInterface::SIZE_SMALL => $this->t('Small'),
       ],
     ];
 
     $element['options']['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : EnhancedButtonInterface::STATUS_DEFAULT,
+      '#default_value' => isset($items[$delta]->options['status']) ? $items[$delta]->options['status'] : EnhancedButtonLinkInterface::STATUS_DEFAULT,
       '#description' => $this->t('Select the status of the button.'),
       '#options' => [
-        EnhancedButtonInterface::STATUS_DEFAULT => $this->t('Default'),
-        EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
-        EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
+        EnhancedButtonLinkInterface::STATUS_DEFAULT => $this->t('Default'),
+        EnhancedButtonLinkInterface::STATUS_ENABLED => $this->t('Enabled'),
+        EnhancedButtonLinkInterface::STATUS_DISABLED => $this->t('Disabled'),
       ],
     ];
 
     $element['options']['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
-      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : EnhancedButtonInterface::TARGET_DEFAULT,
+      '#default_value' => isset($items[$delta]->options['target']) ? $items[$delta]->options['target'] : EnhancedButtonLinkInterface::TARGET_DEFAULT,
       '#description' => $this->t('Select the link target.'),
       '#options' => [
-        EnhancedButtonInterface::TARGET_DEFAULT => $this->t('Default'),
-        EnhancedButtonInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
-        EnhancedButtonInterface::TARGET_NEW_TAB => $this->t('New Tab'),
+        EnhancedButtonLinkInterface::TARGET_DEFAULT => $this->t('Default'),
+        EnhancedButtonLinkInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
+        EnhancedButtonLinkInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],
     ];
 

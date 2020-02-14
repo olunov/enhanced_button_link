@@ -1,9 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains EnhancedButtonLinkParseException.
- */
+namespace Drupal\enhanced_button_link;
+
+use Exception;
 
 /**
  * Class EnhancedButtonLinkParseException.

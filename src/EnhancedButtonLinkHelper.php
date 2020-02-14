@@ -1,13 +1,13 @@
 <?php
 
+namespace Drupal\enhanced_button_link;
+
 use Drupal\Component\Utility\Html;
-use Drupal\enhanced_button_link\EnhancedButtonInterface;
 
 /**
- * @file
- * Contains EnhancedButtonLinkHelper class.
+ * Class EnhancedButtonLinkHelper
+ * @package Drupal\enhanced_button_link
  */
-
 class EnhancedButtonLinkHelper {
 
   /**
@@ -32,21 +32,24 @@ class EnhancedButtonLinkHelper {
       }
 
       // Parse and check style options pairs.
-      list($raw_css_class, $raw_name, $other) = explode('|', $line);
+      list($raw_css_class, $raw_name, $other) = explode('|', trim($line));
+      $raw_css_class = trim($raw_css_class);
+      $raw_name = trim($raw_name);
+
       if (empty($raw_css_class) || empty($raw_name) || !empty($other)) {
-        throw new EnhancedButtonLinkParseException('Error parsing pair', EnhancedButtonInterface::EXC_CODE_PARSE_PAIR);
+        throw new EnhancedButtonLinkParseException('Error parsing pair', EnhancedButtonLinkInterface::EXC_CODE_PARSE_PAIR);
       }
 
       // Check for style option CSS class name.
       $css_class = Html::cleanCssIdentifier($raw_css_class);
       if ($css_class !== $raw_css_class) {
-        throw new EnhancedButtonLinkParseException('Error parsing style option css class name', EnhancedButtonInterface::EXC_CODE_PARSE_CSS_CLASS);
+        throw new EnhancedButtonLinkParseException('Error parsing style option css class name', EnhancedButtonLinkInterface::EXC_CODE_PARSE_CSS_CLASS);
       }
 
       // Check for style option name.
       $name = Html::escape($raw_name);
       if ($name !== $raw_name) {
-        throw new EnhancedButtonLinkParseException('Error parsing style option name', EnhancedButtonInterface::EXC_CODE_PARSE_NAME);
+        throw new EnhancedButtonLinkParseException('Error parsing style option name', EnhancedButtonLinkInterface::EXC_CODE_PARSE_NAME);
       }
 
       $configs[$css_class] = $name;

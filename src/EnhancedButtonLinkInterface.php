@@ -5,7 +5,7 @@ namespace Drupal\enhanced_button_link;
 /**
  * Defines an interface for the Enhanced Button Formatter.
  */
-interface EnhancedButtonInterface {
+interface EnhancedButtonLinkInterface {
 
   /**
    * Specifies whether the button's style is to be used as default.

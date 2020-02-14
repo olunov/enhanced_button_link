@@ -9,7 +9,7 @@ use Drupal\Core\Path\PathValidatorInterface;
 use Drupal\Core\Utility\Token;
 use Drupal\link\Plugin\Field\FieldFormatter\LinkFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\enhanced_button_link\EnhancedButtonInterface;
+use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 
 /**
  * Plugin implementation of the 'enhanced_button_formatter' formatter.
@@ -81,9 +81,9 @@ class EnhancedButtonFormatter extends LinkFormatter {
   public static function defaultSettings() {
     return [
       'type' => 'btn-primary',
-      'size' => EnhancedButtonInterface::SIZE_NORMAL,
-      'status' => EnhancedButtonInterface::STATUS_ENABLED,
-      'target' => EnhancedButtonInterface::TARGET_SAME_WINDOW,
+      'size' => EnhancedButtonLinkInterface::SIZE_NORMAL,
+      'status' => EnhancedButtonLinkInterface::STATUS_ENABLED,
+      'target' => EnhancedButtonLinkInterface::TARGET_SAME_WINDOW,
     ] + parent::defaultSettings();
   }
 
@@ -121,11 +121,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $form['size'] = [
       '#type' => 'select',
       '#title' => $this->t('Size'),
-      '#default_value' => !empty($settings['size']) ? $settings['size'] : EnhancedButtonInterface::SIZE_NORMAL,
+      '#default_value' => !empty($settings['size']) ? $settings['size'] : EnhancedButtonLinkInterface::SIZE_NORMAL,
       '#options' => [
-        EnhancedButtonInterface::SIZE_NORMAL => $this->t('Normal'),
-        EnhancedButtonInterface::SIZE_BIG => $this->t('Big'),
-        EnhancedButtonInterface::SIZE_SMALL => $this->t('Small'),
+        EnhancedButtonLinkInterface::SIZE_NORMAL => $this->t('Normal'),
+        EnhancedButtonLinkInterface::SIZE_BIG => $this->t('Big'),
+        EnhancedButtonLinkInterface::SIZE_SMALL => $this->t('Small'),
       ],
       '#required' => TRUE,
     ];
@@ -133,10 +133,10 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $form['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => !empty($settings['status']) ? $settings['status'] : EnhancedButtonInterface::STATUS_ENABLED,
+      '#default_value' => !empty($settings['status']) ? $settings['status'] : EnhancedButtonLinkInterface::STATUS_ENABLED,
       '#options' => [
-        EnhancedButtonInterface::STATUS_ENABLED => $this->t('Enabled'),
-        EnhancedButtonInterface::STATUS_DISABLED => $this->t('Disabled'),
+        EnhancedButtonLinkInterface::STATUS_ENABLED => $this->t('Enabled'),
+        EnhancedButtonLinkInterface::STATUS_DISABLED => $this->t('Disabled'),
       ],
       '#required' => TRUE,
     ];
@@ -144,10 +144,10 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $form['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
-      '#default_value' => !empty($settings['target']) ? $settings['target'] : EnhancedButtonInterface::TARGET_SAME_WINDOW,
+      '#default_value' => !empty($settings['target']) ? $settings['target'] : EnhancedButtonLinkInterface::TARGET_SAME_WINDOW,
       '#options' => [
-        EnhancedButtonInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
-        EnhancedButtonInterface::TARGET_NEW_TAB => $this->t('New Tab'),
+        EnhancedButtonLinkInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
+        EnhancedButtonLinkInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],
       '#required' => TRUE,
     ];
@@ -199,22 +199,22 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $btn_class = [];
 
       // Add button type.
-      $button_link_type = (empty($options['type']) || $options['type'] == EnhancedButtonInterface::TYPE_DEFAULT) ? $settings['type'] : $options['type'];
+      $button_link_type = (empty($options['type']) || $options['type'] == EnhancedButtonLinkInterface::TYPE_DEFAULT) ? $settings['type'] : $options['type'];
 
       if (!empty($button_link_type)) {
         $btn_class += ['btn', $button_link_type];
       }
 
       // Add button size.
-      $button_link_size = (empty($options['size']) || $options['size'] == EnhancedButtonInterface::SIZE_DEFAULT) ? $settings['size'] : $options['size'];
+      $button_link_size = (empty($options['size']) || $options['size'] == EnhancedButtonLinkInterface::SIZE_DEFAULT) ? $settings['size'] : $options['size'];
 
       $size_css_class = '';
       switch ($button_link_size) {
-        case EnhancedButtonInterface::SIZE_BIG:
+        case EnhancedButtonLinkInterface::SIZE_BIG:
           $size_css_class = 'btn-lg';
           break;
 
-        case EnhancedButtonInterface::SIZE_SMALL:
+        case EnhancedButtonLinkInterface::SIZE_SMALL:
           $size_css_class = 'btn-sm';
           break;
       }
@@ -222,20 +222,20 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $btn_class[] = $size_css_class;
 
       // Add button status.
-      $button_link_status = (empty($options['status']) || $options['status'] == EnhancedButtonInterface::STATUS_DEFAULT) ? $settings['status'] : $options['status'];
+      $button_link_status = (empty($options['status']) || $options['status'] == EnhancedButtonLinkInterface::STATUS_DEFAULT) ? $settings['status'] : $options['status'];
 
       // Disable button if set to be disabled.
-      if ($button_link_status == EnhancedButtonInterface::STATUS_DISABLED) {
+      if ($button_link_status == EnhancedButtonLinkInterface::STATUS_DISABLED) {
         $attributes['aria-disabled'] = 'true';
         $attributes['role'] = 'button';
         $btn_class[] = 'disabled';
       }
 
       // Add button target.
-      $button_link_target = (empty($options['target']) || $options['target'] == EnhancedButtonInterface::TARGET_DEFAULT) ? $settings['target'] : $options['target'];
+      $button_link_target = (empty($options['target']) || $options['target'] == EnhancedButtonLinkInterface::TARGET_DEFAULT) ? $settings['target'] : $options['target'];
 
       // Add target to the link.
-      if ($button_link_target == EnhancedButtonInterface::TARGET_NEW_TAB) {
+      if ($button_link_target == EnhancedButtonLinkInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
 
