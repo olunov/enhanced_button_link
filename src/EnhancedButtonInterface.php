@@ -62,4 +62,19 @@ interface EnhancedButtonInterface {
    */
   const TARGET_NEW_TAB = 'new_tab';
 
+  /**
+   * Error code for parsing key value pair.
+   */
+  const EXC_CODE_PARSE_PAIR = 0x01;
+
+  /**
+   * Error code for parsing key value pair.
+   */
+  const EXC_CODE_PARSE_CSS_CLASS = 0x02;
+
+  /**
+   * Error code for parsing key value pair.
+   */
+  const EXC_CODE_PARSE_NAME = 0x03;
+
 }
