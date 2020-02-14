@@ -32,11 +32,11 @@ class EnhancedButtonLinkHelper {
       }
 
       // Parse and check style options pairs.
-      list($raw_css_class, $raw_name, $other) = explode('|', trim($line));
+      list($raw_css_class, $raw_name) = explode('|', trim($line), 2);
       $raw_css_class = trim($raw_css_class);
       $raw_name = trim($raw_name);
 
-      if (empty($raw_css_class) || empty($raw_name) || !empty($other)) {
+      if (empty($raw_css_class) || empty($raw_name)) {
         throw new EnhancedButtonLinkParseException('Error parsing pair', EnhancedButtonLinkInterface::EXC_CODE_PARSE_PAIR);
       }
 
@@ -67,7 +67,7 @@ class EnhancedButtonLinkHelper {
    * @return string
    *   String containing key|value per line of available button link styles.
    */
-  public static function makeValueFromConfigs(array $configs) {
+  public static function makeValueFromConfigs($configs) {
     $value = '';
     foreach ($configs as $css_class => $name) {
       $value .= "{$css_class}|{$name}\n";
