@@ -2,10 +2,12 @@
 
 namespace Drupal\enhanced_button_link\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'Enhanced button link' widget.
@@ -21,10 +23,54 @@ use Drupal\Core\Form\FormStateInterface;
 class EnhancedButtonLinkWidget extends LinkWidget {
 
   /**
+   * Contains the enhanced_button_link.settings configuration object.
+   *
+   * @var \Drupal\Core\Config\Config
+   */
+  protected $enhancedButtonLinkConfigs;
+
+  /**
+   * Constructs a EnhancedButtonLinkWidget object.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the widget.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the widget is associated.
+   * @param array $settings
+   *   The widget settings.
+   * @param array $third_party_settings
+   *   Any third party settings.
+   * @param \Drupal\Core\Config\Config $enhanced_button_link_configs
+   *   The enhanced_button_link.settings configuration factory object.
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, $enhanced_button_link_configs) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
+    $this->enhancedButtonLinkConfigs = $enhanced_button_link_configs;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['third_party_settings'],
+      $container->get('config.factory')->get('enhanced_button_link.settings')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element = parent::formElement($items, $delta, $element, $form, $form_state);
+
+    $button_link_styles = $this->enhancedButtonLinkConfigs->get('button_link_styles');
 
     $element['options'] = [
       '#type' => 'details',
@@ -38,24 +84,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#description' => $this->t('Select the type of the button.'),
       '#options' => [
         EnhancedButtonLinkInterface::TYPE_DEFAULT => $this->t('Default'),
-        'btn-primary' => $this->t('btn-primary'),
-        'btn-secondary' => $this->t('btn-secondary'),
-        'btn-success' => $this->t('btn-success'),
-        'btn-danger' => $this->t('btn-danger'),
-        'btn-warning' => $this->t('btn-warning'),
-        'btn-info' => $this->t('btn-info'),
-        'btn-light' => $this->t('btn-light'),
-        'btn-dark' => $this->t('btn-dark'),
-        'btn-link' => $this->t('btn-link'),
-        'btn-outline-primary' => $this->t('btn-outline-primary'),
-        'btn-outline-secondary' => $this->t('btn-outline-secondary'),
-        'btn-outline-success' => $this->t('btn-outline-success'),
-        'btn-outline-danger' => $this->t('btn-outline-danger'),
-        'btn-outline-warning' => $this->t('btn-outline-warning'),
-        'btn-outline-info' => $this->t('btn-outline-info'),
-        'btn-outline-light' => $this->t('btn-outline-light'),
-        'btn-outline-dark' => $this->t('btn-outline-dark'),
-      ],
+      ] + $button_link_styles,
     ];
 
     $element['options']['size'] = [
