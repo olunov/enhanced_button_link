@@ -2,6 +2,7 @@
 
 namespace Drupal\enhanced_button_link\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Config\Config;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 use Drupal\link\Plugin\Field\FieldWidget\LinkWidget;
@@ -45,7 +46,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
    * @param \Drupal\Core\Config\Config $enhanced_button_link_configs
    *   The enhanced_button_link.settings configuration factory object.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, $enhanced_button_link_configs) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, Config $enhanced_button_link_configs) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->enhancedButtonLinkConfigs = $enhanced_button_link_configs;
   }

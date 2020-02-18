@@ -42,10 +42,10 @@ class SettingsForm extends ConfigFormBase {
 
     $form['button_link_styles'] = [
       '#type' => 'textarea',
-      '#title' => t('Button Link Styles'),
+      '#title' => $this->t('Button Link Styles'),
       '#default_value' => $button_link_styles_value,
       '#rows' => $rows_number,
-      '#description' => t('Put here available button link styles options. There should be pairs of bootstrap button classes and their titles in format: bootstrap-class|Style Title, for example: btn-primary|Primary button.'),
+      '#description' => $this->t('Put here available button link styles options. There should be pairs of bootstrap button classes and their titles in format: bootstrap-class|Style Title, for example: btn-primary|Primary button.'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -61,14 +61,15 @@ class SettingsForm extends ConfigFormBase {
 
     try {
       $button_link_styles_options = EnhancedButtonLinkHelper::parseConfigsFromValue($values['button_link_styles']);
-    } catch (EnhancedButtonLinkParseException $e) {
+    }
+    catch (EnhancedButtonLinkParseException $e) {
       switch ($e->getCode()) {
         case EnhancedButtonLinkInterface::EXC_CODE_PARSE_PAIR:
           $form_state->setErrorByName('button_link_styles', $this->t('Styles options must be entered in format: bootstrap-class|Title, for example: btn-primary|Primary button. One per line.'));
           break;
 
         case EnhancedButtonLinkInterface::EXC_CODE_PARSE_CSS_CLASS:
-          $form_state->setErrorByName('button_link_styles', $this->t('Some css class doesn\'t corresponds to correct format.'));
+          $form_state->setErrorByName('button_link_styles', $this->t("Some css class doesn\'t corresponds to correct format."));
           break;
 
         case EnhancedButtonLinkInterface::EXC_CODE_PARSE_NAME:

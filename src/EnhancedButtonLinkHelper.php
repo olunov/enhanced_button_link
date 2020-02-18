@@ -5,15 +5,14 @@ namespace Drupal\enhanced_button_link;
 use Drupal\Component\Utility\Html;
 
 /**
- * Class EnhancedButtonLinkHelper
- * @package Drupal\enhanced_button_link
+ * Class EnhancedButtonLinkHelper.
  */
 class EnhancedButtonLinkHelper {
 
   /**
    * Parse style options array from string value.
    *
-   * @param $value
+   * @param string $value
    *   String containing key|value per line of available button link styles
    *   options.
    *
@@ -67,7 +66,7 @@ class EnhancedButtonLinkHelper {
    * @return string
    *   String containing key|value per line of available button link styles.
    */
-  public static function makeValueFromConfigs($configs) {
+  public static function makeValueFromConfigs(array $configs) {
     $value = '';
     foreach ($configs as $css_class => $name) {
       $value .= "{$css_class}|{$name}\n";
