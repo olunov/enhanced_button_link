@@ -51,31 +51,31 @@ class SettingsForm extends ConfigFormBase {
     $form['override'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Override Options'),
-      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.'),
+      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.<br/><b>Important:</b> after updating overriding configuration it required to clean the cache for all content used the button link formatter.'),
     ];
 
     $form['override']['type'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Type'),
-      '#default_value' => $configs->get('type'),
+      '#default_value' => $configs->get('override_type'),
     ];
 
     $form['override']['size'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Size'),
-      '#default_value' => $configs->get('size'),
+      '#default_value' => $configs->get('override_size'),
     ];
 
     $form['override']['status'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Status'),
-      '#default_value' => $configs->get('status'),
+      '#default_value' => $configs->get('override_status'),
     ];
 
     $form['override']['target'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Target'),
-      '#default_value' => $configs->get('target'),
+      '#default_value' => $configs->get('override_target'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -120,10 +120,10 @@ class SettingsForm extends ConfigFormBase {
     $values = $form_state->getValues();
     $this->config('enhanced_button_link.settings')
       ->set('button_link_styles', $values['button_link_styles_options'])
-      ->set('type', $values['type'])
-      ->set('size', $values['size'])
-      ->set('status', $values['status'])
-      ->set('target', $values['target'])
+      ->set('override_type', $values['type'])
+      ->set('override_size', $values['size'])
+      ->set('override_status', $values['status'])
+      ->set('override_target', $values['target'])
       ->save();
 
     parent::submitForm($form, $form_state);
