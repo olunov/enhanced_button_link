@@ -95,6 +95,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       'type' => 'btn-primary',
       'size' => EnhancedButtonLinkInterface::SIZE_NORMAL,
       'status' => EnhancedButtonLinkInterface::STATUS_ENABLED,
+      'inline_buttons' => EnhancedButtonLinkInterface::INLINE_BUTTONS,
       'target' => EnhancedButtonLinkInterface::TARGET_SAME_WINDOW,
     ] + parent::defaultSettings();
   }
@@ -104,7 +105,6 @@ class EnhancedButtonFormatter extends LinkFormatter {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
-    $settings = $this->getSettings();
     $button_link_styles = $this->enhancedButtonLinkConfigs->get('button_link_styles');
 
     // Disable Link Formatter settings.
@@ -116,7 +116,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $elements['type'] = [
       '#type' => 'select',
       '#title' => $this->t('Type'),
-      '#default_value' => !empty($settings['type']) ? $settings['type'] : 'btn-primary',
+      '#default_value' => $this->getSetting('type'),
       '#options' => $button_link_styles,
       '#required' => TRUE,
     ];
@@ -124,7 +124,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $elements['size'] = [
       '#type' => 'select',
       '#title' => $this->t('Size'),
-      '#default_value' => !empty($settings['size']) ? $settings['size'] : EnhancedButtonLinkInterface::SIZE_NORMAL,
+      '#default_value' => $this->getSetting('size'),
       '#options' => [
         EnhancedButtonLinkInterface::SIZE_NORMAL => $this->t('Normal'),
         EnhancedButtonLinkInterface::SIZE_BIG => $this->t('Big'),
@@ -136,7 +136,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $elements['status'] = [
       '#type' => 'select',
       '#title' => $this->t('Status'),
-      '#default_value' => !empty($settings['status']) ? $settings['status'] : EnhancedButtonLinkInterface::STATUS_ENABLED,
+      '#default_value' => $this->getSetting('status'),
       '#options' => [
         EnhancedButtonLinkInterface::STATUS_ENABLED => $this->t('Enabled'),
         EnhancedButtonLinkInterface::STATUS_DISABLED => $this->t('Disabled'),
@@ -144,10 +144,17 @@ class EnhancedButtonFormatter extends LinkFormatter {
       '#required' => TRUE,
     ];
 
+    $elements['inline_buttons'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display buttons links inline'),
+      '#default_value' => $this->getSetting('inline_buttons'),
+      '#return_value' => EnhancedButtonLinkInterface::INLINE_BUTTONS,
+    ];
+
     $elements['target'] = [
       '#type' => 'select',
       '#title' => $this->t('Target'),
-      '#default_value' => !empty($settings['target']) ? $settings['target'] : EnhancedButtonLinkInterface::TARGET_SAME_WINDOW,
+      '#default_value' => $this->getSetting('target'),
       '#options' => [
         EnhancedButtonLinkInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
         EnhancedButtonLinkInterface::TARGET_NEW_TAB => $this->t('New Tab'),
@@ -163,13 +170,13 @@ class EnhancedButtonFormatter extends LinkFormatter {
    * {@inheritdoc}
    */
   public function settingsSummary() {
-    $settings = $this->getSettings();
     $summary = [];
 
-    $summary[] = $this->t('Button Type: @text', ['@text' => $settings['type']]);
-    $summary[] = $this->t('Button Size: @text', ['@text' => $settings['size']]);
-    $summary[] = $this->t('Button Status: @text', ['@text' => $settings['status']]);
-    $summary[] = $this->t('Button Target: @text', ['@text' => $settings['target']]);
+    $summary[] = $this->t('Button Type: @text', ['@text' => $this->getSetting('type')]);
+    $summary[] = $this->t('Button Size: @text', ['@text' => $this->getSetting('size')]);
+    $summary[] = $this->t('Button Status: @text', ['@text' => $this->getSetting('status')]);
+    $summary[] = $this->t('Button Target: @text', ['@text' => $this->getSetting('target')]);
+    $summary[] = $this->t('Inline Buttons: @text', ['@text' => $this->getSetting('inline_buttons')]);
 
     return $summary;
   }
@@ -190,14 +197,6 @@ class EnhancedButtonFormatter extends LinkFormatter {
 
       // Load Link Title.
       $link_title = $this->token->replace($item->title, [$entity->getEntityTypeId() => $entity], ['clear' => TRUE]);
-
-      // Create default output of the link.
-      $element[$delta] = [
-        '#type' => 'link',
-        '#url' => $url,
-        '#title' => $link_title,
-        '#options' => [],
-      ];
 
       $attributes = [];
       $btn_class = [];
@@ -248,12 +247,20 @@ class EnhancedButtonFormatter extends LinkFormatter {
         $attributes['class'] = implode(' ', $btn_class);
       }
 
-      // Add collected attributes to the element.
-      if (!empty($attributes)) {
-        $element[$delta]['#options'] += ['attributes' => []];
-        $element[$delta]['#options']['attributes'] += $attributes;
-      }
+      // Create output of the button link.
+      $element[$delta] = [
+        '#type' => 'link',
+        '#title' => $link_title,
+        '#url' => $url,
+        '#options' => ['attributes' => $attributes],
+      ];
     }
+
+    if ($settings['inline_buttons'] == EnhancedButtonLinkInterface::INLINE_BUTTONS) {
+      $element['#attributes']['class'][] = 'enhanced-button-link-inline';
+    }
+
+    $element['#attached']['library'][] = 'enhanced_button_link/enhanced_button_link.field';
 
     return $element;
   }

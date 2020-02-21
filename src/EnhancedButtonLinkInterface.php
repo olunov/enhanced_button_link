@@ -63,6 +63,11 @@ interface EnhancedButtonLinkInterface {
   const TARGET_NEW_TAB = 'new_tab';
 
   /**
+   * Specifies whether the links should be displayed inline.
+   */
+  const INLINE_BUTTONS = 0x01;
+
+  /**
    * Error code for parsing key value pair.
    */
   const EXC_CODE_PARSE_PAIR = 0x01;

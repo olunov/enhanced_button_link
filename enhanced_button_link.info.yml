@@ -1,6 +1,6 @@
 name: Enhanced Button Link
 type: module
-description: 'Provides a enhanced link field type with extended capabilities.'
+description: 'Provides a enhanced link field widget and formatter with extended capabilities.'
 core: 8.x
 package: Field types
 
