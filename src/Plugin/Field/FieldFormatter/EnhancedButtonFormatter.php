@@ -241,6 +241,9 @@ class EnhancedButtonFormatter extends LinkFormatter {
       if ($button_link_target == EnhancedButtonLinkInterface::TARGET_NEW_TAB) {
         $attributes['target'] = '_blank';
       }
+      else {
+        $attributes['target'] = '';
+      }
 
       // Add collected classes to attributes.
       if (!empty($btn_class)) {
