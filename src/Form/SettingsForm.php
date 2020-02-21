@@ -48,6 +48,36 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Put here available button link styles options. There should be pairs of bootstrap button classes and their titles in format: bootstrap-class|Style Title, for example: btn-primary|Primary button.'),
     ];
 
+    $form['override'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Override Options'),
+      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.'),
+    ];
+
+    $form['override']['type'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Type'),
+      '#default_value' => $configs->get('type'),
+    ];
+
+    $form['override']['size'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Size'),
+      '#default_value' => $configs->get('size'),
+    ];
+
+    $form['override']['status'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Status'),
+      '#default_value' => $configs->get('status'),
+    ];
+
+    $form['override']['target'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Target'),
+      '#default_value' => $configs->get('target'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -88,9 +118,12 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
-    $button_link_styles_options = $values['button_link_styles_options'];
     $this->config('enhanced_button_link.settings')
-      ->set('button_link_styles', $button_link_styles_options)
+      ->set('button_link_styles', $values['button_link_styles_options'])
+      ->set('type', $values['type'])
+      ->set('size', $values['size'])
+      ->set('status', $values['status'])
+      ->set('target', $values['target'])
       ->save();
 
     parent::submitForm($form, $form_state);
