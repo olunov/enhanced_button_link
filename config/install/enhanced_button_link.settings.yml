@@ -16,3 +16,7 @@ button_link_styles:
   btn-outline-info: 'Info Outline Button'
   btn-outline-light: 'Light Outline Button'
   btn-outline-dark: 'Dark Outline Button'
+override_type: 1
+override_size: 1
+override_status: 0
+override_target: 1
