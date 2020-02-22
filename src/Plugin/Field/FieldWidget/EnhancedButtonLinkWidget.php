@@ -81,7 +81,8 @@ class EnhancedButtonLinkWidget extends LinkWidget {
     $element['options'] = [
       '#type' => 'details',
       '#title' => $this->t('Button Link Options'),
-      // Hide whole options area if all of options are not checked to be overridden.
+      // Hide whole options area if all of options are not checked to be
+      // overridden.
       '#access' => ($override_type || $override_size || $override_status || $override_target),
     ];
 
