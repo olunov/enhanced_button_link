@@ -13,15 +13,9 @@ CONTENTS OF THIS FILE
 
 INTRODUCTION
 ------------
-
-Enhanced Button Link module contains:
-
- - Enhanced Button Link Widget for adding Bootstrap options to link.
-
- - Enhanced Button Link Formatter for rendering a link as a Bootstrap button.
-
-This module is in active development for now, it is not recommended to use it on
-a production site.
+This module enhances core link field widget and formatter in order to render a
+link as a bootstrap button. It has ability to configure style, size, status (if
+disabled) and target.
 
  - For a full description of the module visit:
    https://www.drupal.org/project/enhanced_button_link
@@ -33,8 +27,11 @@ a production site.
 REQUIREMENTS
 ------------
 
-The module requires Link (Drupal core) module.
+The module requires:
 
+ - Link (Drupal core) module.
+
+ - Bootstrap based theme.
 
 INCLUDED MODULES AND FEATURES
 -----------------------------
@@ -47,6 +44,13 @@ Enhanced Button Link Formatter (EnhancedButtonFormatter) - Adds a formatter for
 rendering a link as Bootstrap button based on specified parameters in the
 widget.
 
+Configuration form to control:
+
+ - Which button styles (types) options are available in widget and formatter.
+
+ - Which styles options (style, size, status and target) will be available in
+   the widget, so it would be possible to override default settings defined in
+   the formatter.
 
 INSTALLATION
 ------------
@@ -66,7 +70,20 @@ CONFIGURATION
    edit] > Manage display.
 4. Select the 'Enhanced Button Link' as formatter for the Link field. Save
    changes.
-5. Now it is possible to manage link options to render it as a Bootstrap button.
+5. Navigate to Administration > Content authoring > Enhanced Button Link
+   Settings to manage available button styles (types) and override options.
+6. Now it is possible to manage link options to render it as a Bootstrap button.
+
+
+NOTES
+-----
+1. There is simple library (enhanced_button_link.field) to display buttons links
+   inline. In order to change the way how to display them inline it is possible
+   to override library on theme level. See more information:
+   https://www.drupal.org/node/2216195#override-extend
+2. It is possible to extend number of available buttons styles supported by
+   Bootstrap by defining buttons CSS classes in the theme styles and adding them
+   to configuration form of the module.
 
 Author/Maintainers
 ------------------
