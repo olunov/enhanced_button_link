@@ -13,17 +13,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 
 /**
- * Plugin implementation of the 'enhanced_button_formatter' formatter.
+ * Plugin implementation of the 'Enhanced Button Link' formatter.
  *
  * @FieldFormatter(
- *   id = "enhanced_button_formatter",
+ *   id = "enhanced_button_link_formatter",
  *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"
  *   }
  * )
  */
-class EnhancedButtonFormatter extends LinkFormatter {
+class EnhancedButtonLinkFormatter extends LinkFormatter {
 
   /**
    * The token replacement instance.
@@ -40,7 +40,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
   protected $enhancedButtonLinkConfigs;
 
   /**
-   * Constructs a new LinkFormatter.
+   * Constructs a new EnhancedButtonLinkFormatter.
    *
    * @param string $plugin_id
    *   The plugin_id for the formatter.
@@ -189,6 +189,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
     $settings = $this->getSettings();
     $entity = $items->getEntity();
 
+    $override_type = (bool) $this->enhancedButtonLinkConfigs->get('override_type');
+    $override_size = (bool) $this->enhancedButtonLinkConfigs->get('override_size');
+    $override_status = (bool) $this->enhancedButtonLinkConfigs->get('override_status');
+    $override_target = (bool) $this->enhancedButtonLinkConfigs->get('override_target');
+
     foreach ($items as $delta => $item) {
       $url = $this->buildUrl($item);
 
@@ -202,14 +207,14 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $btn_class = [];
 
       // Add button type.
-      $button_link_type = (empty($options['type']) || $options['type'] == EnhancedButtonLinkInterface::TYPE_DEFAULT) ? $settings['type'] : $options['type'];
+      $button_link_type = (!$override_type || empty($options['type']) || $options['type'] == EnhancedButtonLinkInterface::TYPE_DEFAULT) ? $settings['type'] : $options['type'];
 
       if (!empty($button_link_type)) {
         $btn_class += ['btn', $button_link_type];
       }
 
       // Add button size.
-      $button_link_size = (empty($options['size']) || $options['size'] == EnhancedButtonLinkInterface::SIZE_DEFAULT) ? $settings['size'] : $options['size'];
+      $button_link_size = (!$override_size || empty($options['size']) || $options['size'] == EnhancedButtonLinkInterface::SIZE_DEFAULT) ? $settings['size'] : $options['size'];
 
       $size_css_class = '';
       switch ($button_link_size) {
@@ -225,7 +230,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $btn_class[] = $size_css_class;
 
       // Add button status.
-      $button_link_status = (empty($options['status']) || $options['status'] == EnhancedButtonLinkInterface::STATUS_DEFAULT) ? $settings['status'] : $options['status'];
+      $button_link_status = (!$override_status || empty($options['status']) || $options['status'] == EnhancedButtonLinkInterface::STATUS_DEFAULT) ? $settings['status'] : $options['status'];
 
       // Disable button if set to be disabled.
       if ($button_link_status == EnhancedButtonLinkInterface::STATUS_DISABLED) {
@@ -235,7 +240,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
       }
 
       // Add button target.
-      $button_link_target = (empty($options['target']) || $options['target'] == EnhancedButtonLinkInterface::TARGET_DEFAULT) ? $settings['target'] : $options['target'];
+      $button_link_target = (!$override_target || empty($options['target']) || $options['target'] == EnhancedButtonLinkInterface::TARGET_DEFAULT) ? $settings['target'] : $options['target'];
 
       // Add target to the link.
       if ($button_link_target == EnhancedButtonLinkInterface::TARGET_NEW_TAB) {
@@ -263,7 +268,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $element['#attributes']['class'][] = 'enhanced-button-link-inline';
     }
 
+    // Adding component library.
     $element['#attached']['library'][] = 'enhanced_button_link/enhanced_button_link.field';
+
+    // Adding caching tag for cleaning.
+    $element['#cache']['tags'][] = 'enhanced_button_link__field_formatter';
 
     return $element;
   }
