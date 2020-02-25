@@ -11,10 +11,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'Enhanced button link' widget.
+ * Plugin implementation of the 'Enhanced Button Link' widget.
  *
  * @FieldWidget(
- *   id = "link_enhanced_button",
+ *   id = "enhanced_button_link_widget",
  *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"

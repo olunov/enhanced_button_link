@@ -13,17 +13,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
 
 /**
- * Plugin implementation of the 'enhanced_button_formatter' formatter.
+ * Plugin implementation of the 'Enhanced Button Link' formatter.
  *
  * @FieldFormatter(
- *   id = "enhanced_button_formatter",
+ *   id = "enhanced_button_link_formatter",
  *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"
  *   }
  * )
  */
-class EnhancedButtonFormatter extends LinkFormatter {
+class EnhancedButtonLinkFormatter extends LinkFormatter {
 
   /**
    * The token replacement instance.
@@ -40,7 +40,7 @@ class EnhancedButtonFormatter extends LinkFormatter {
   protected $enhancedButtonLinkConfigs;
 
   /**
-   * Constructs a new LinkFormatter.
+   * Constructs a new EnhancedButtonLinkFormatter.
    *
    * @param string $plugin_id
    *   The plugin_id for the formatter.
