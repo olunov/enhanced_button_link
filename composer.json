@@ -4,7 +4,7 @@
   "type": "drupal-module",
   "keywords": ["Drupal", "Fields"],
   "homepage": "https://www.drupal.org/project/enhanced_button_link",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Oleksandr Lunov (alunyov)",
