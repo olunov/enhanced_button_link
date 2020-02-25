@@ -3,6 +3,7 @@ type: module
 description: 'Provides an enhanced link field widget and formatter with extended capabilities.'
 core: 8.x
 package: Field types
+configure: enhanced_button_link.admin_settings
 
 dependencies:
   - drupal:link

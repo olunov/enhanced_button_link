@@ -11,10 +11,10 @@ use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'Enhanced button link' widget.
+ * Plugin implementation of the 'Enhanced Button Link' widget.
  *
  * @FieldWidget(
- *   id = "link_enhanced_button",
+ *   id = "enhanced_button_link_widget",
  *   label = @Translation("Enhanced Button Link"),
  *   field_types = {
  *     "link"
@@ -73,9 +73,17 @@ class EnhancedButtonLinkWidget extends LinkWidget {
 
     $button_link_styles = $this->enhancedButtonLinkConfigs->get('button_link_styles');
 
+    $override_type = (bool) $this->enhancedButtonLinkConfigs->get('override_type');
+    $override_size = (bool) $this->enhancedButtonLinkConfigs->get('override_size');
+    $override_status = (bool) $this->enhancedButtonLinkConfigs->get('override_status');
+    $override_target = (bool) $this->enhancedButtonLinkConfigs->get('override_target');
+
     $element['options'] = [
       '#type' => 'details',
       '#title' => $this->t('Button Link Options'),
+      // Hide whole options area if all of options are not checked to be
+      // overridden.
+      '#access' => ($override_type || $override_size || $override_status || $override_target),
     ];
 
     $element['options']['type'] = [
@@ -86,6 +94,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
       '#options' => [
         EnhancedButtonLinkInterface::TYPE_DEFAULT => $this->t('Default'),
       ] + $button_link_styles,
+      '#access' => $override_type,
     ];
 
     $element['options']['size'] = [
@@ -99,6 +108,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
         EnhancedButtonLinkInterface::SIZE_BIG => $this->t('Big'),
         EnhancedButtonLinkInterface::SIZE_SMALL => $this->t('Small'),
       ],
+      '#access' => $override_size,
     ];
 
     $element['options']['status'] = [
@@ -111,6 +121,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
         EnhancedButtonLinkInterface::STATUS_ENABLED => $this->t('Enabled'),
         EnhancedButtonLinkInterface::STATUS_DISABLED => $this->t('Disabled'),
       ],
+      '#access' => $override_status,
     ];
 
     $element['options']['target'] = [
@@ -123,6 +134,7 @@ class EnhancedButtonLinkWidget extends LinkWidget {
         EnhancedButtonLinkInterface::TARGET_SAME_WINDOW => $this->t('Same Window'),
         EnhancedButtonLinkInterface::TARGET_NEW_TAB => $this->t('New Tab'),
       ],
+      '#access' => $override_target,
     ];
 
     return $element;

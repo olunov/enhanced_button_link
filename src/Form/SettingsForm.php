@@ -2,6 +2,7 @@
 
 namespace Drupal\enhanced_button_link\Form;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
@@ -48,6 +49,36 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Put here available button link styles options. There should be pairs of bootstrap button classes and their titles in format: bootstrap-class|Style Title, for example: btn-primary|Primary button.'),
     ];
 
+    $form['override'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Override Options'),
+      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.'),
+    ];
+
+    $form['override']['type'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Type'),
+      '#default_value' => $configs->get('override_type'),
+    ];
+
+    $form['override']['size'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Size'),
+      '#default_value' => $configs->get('override_size'),
+    ];
+
+    $form['override']['status'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Status'),
+      '#default_value' => $configs->get('override_status'),
+    ];
+
+    $form['override']['target'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Target'),
+      '#default_value' => $configs->get('override_target'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -88,10 +119,16 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
-    $button_link_styles_options = $values['button_link_styles_options'];
     $this->config('enhanced_button_link.settings')
-      ->set('button_link_styles', $button_link_styles_options)
+      ->set('button_link_styles', $values['button_link_styles_options'])
+      ->set('override_type', $values['type'])
+      ->set('override_size', $values['size'])
+      ->set('override_status', $values['status'])
+      ->set('override_target', $values['target'])
       ->save();
+
+    // Cleaning cache where Enhanced Button Link formatter was used.
+    Cache::invalidateTags(['enhanced_button_link__field_formatter']);
 
     parent::submitForm($form, $form_state);
   }
