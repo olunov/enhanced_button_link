@@ -268,7 +268,11 @@ class EnhancedButtonFormatter extends LinkFormatter {
       $element['#attributes']['class'][] = 'enhanced-button-link-inline';
     }
 
+    // Adding component library.
     $element['#attached']['library'][] = 'enhanced_button_link/enhanced_button_link.field';
+
+    // Adding caching tag for cleaning.
+    $element['#cache']['tags'][] = 'enhanced_button_link__field_formatter';
 
     return $element;
   }

@@ -2,6 +2,7 @@
 
 namespace Drupal\enhanced_button_link\Form;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\enhanced_button_link\EnhancedButtonLinkInterface;
@@ -51,7 +52,7 @@ class SettingsForm extends ConfigFormBase {
     $form['override'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Override Options'),
-      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.<br/><b>Important:</b> after updating overriding configuration it required to clean the cache for all content used the button link formatter.'),
+      '#description' => $this->t('Specify here which button link options should be overridable in the field widget.'),
     ];
 
     $form['override']['type'] = [
@@ -125,6 +126,9 @@ class SettingsForm extends ConfigFormBase {
       ->set('override_status', $values['status'])
       ->set('override_target', $values['target'])
       ->save();
+
+    // Cleaning cache where Enhanced Button Link formatter was used.
+    Cache::invalidateTags(['enhanced_button_link__field_formatter']);
 
     parent::submitForm($form, $form_state);
   }
