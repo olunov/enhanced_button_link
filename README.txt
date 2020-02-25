@@ -46,7 +46,7 @@ widget.
 
 Configuration form to control:
 
- - Which button styles (types) options are be available in widget and formatter.
+ - Which button styles (types) options are available in widget and formatter.
 
  - Which styles options (style, size, status and target) will be available in
    the widget, so it would be possible to override default settings defined in
@@ -71,8 +71,19 @@ CONFIGURATION
 4. Select the 'Enhanced Button Link' as formatter for the Link field. Save
    changes.
 5. Navigate to Administration > Content authoring > Enhanced Button Link
-   Settings to manage manage available button styles (types) and .
+   Settings to manage available button styles (types) and override options.
 6. Now it is possible to manage link options to render it as a Bootstrap button.
+
+
+NOTES
+-----
+1. There is simple library (enhanced_button_link.field) to display buttons links
+   inline. In order to change the way how to display them inline it is possible
+   to override library on theme level. See more information:
+   https://www.drupal.org/node/2216195#override-extend
+2. It is possible to extend number of available buttons styles supported by
+   Bootstrap by defining buttons CSS classes in the theme styles and adding them
+   to configuration form of the module.
 
 Author/Maintainers
 ------------------
