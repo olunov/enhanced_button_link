@@ -14,8 +14,8 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 This module enhances core link field widget and formatter in order to render a
-link as a bootstrap button. It has ability to configure style, size, status (if
-disabled) and target.
+link as a bootstrap button. It has the ability to configure style, size, status
+(if disabled) and target.
 
  - For a full description of the module visit:
    https://www.drupal.org/project/enhanced_button_link
